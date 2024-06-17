@@ -25,11 +25,19 @@ export default function YearPage({ params }) {
         links = [];
     }
 
-    let newsContent = <p>No news found ofr hte selected period</p>;
+    let newsContent = <p>No news found for the selected period</p>;
 
     if (news && news.length > 0) {
         newsContent = <NewsList news={news} />;
     }
+
+    if (
+        (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+        (selectedMonth && !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+    ) {
+        throw new Error("Invalid filter.");
+    }
+
     return (
         <>
             <header id="archive-header">
